@@ -21,11 +21,19 @@ class _LoginFormState extends State<LoginForm> {
         SnackBar(content: Text('Welcome to Open Weather App, $email!')),
       );
 
-       //TODO: Navigate to weather screen
+      //TODO: Navigate to weather screen
     }
   }
 
- @override
+  String? _handleValidateField(String? value, String text) {
+    if (value == null || value.isEmpty) {
+      return text;
+    }
+
+    return null;
+  }
+
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -39,37 +47,50 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Login', style: Theme.of(context).textTheme.headlineMedium),
+          _loginTextLabel(context),
           const SizedBox(height: 24),
-          TextFormField(
-            controller: _emailController,
-            decoration: const InputDecoration(
-              labelText: 'Email',
-              border: OutlineInputBorder(),
-            ),
-            validator: (value) =>
-                value == null || value.isEmpty ? 'Enter email' : null,
-          ),
+          _emailTextField(),
           const SizedBox(height: 16),
-          TextFormField(
-            controller: _passwordController,
-            decoration: const InputDecoration(
-              labelText: 'Password',
-              border: OutlineInputBorder(),
-            ),
-            obscureText: true,
-            validator: (value) =>
-                value == null || value.isEmpty ? 'Enter password' : null,
-          ),
+          _passwordTextField(),
           const SizedBox(height: 24),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: _handleLogin,
-              child: const Text('Login'),
-            ),
-          ),
+          _loginButton(),
         ],
+      ),
+    );
+  }
+
+  Text _loginTextLabel(BuildContext context) =>
+      Text('Login', style: Theme.of(context).textTheme.headlineMedium);
+
+  TextFormField _emailTextField() {
+    return TextFormField(
+      controller: _emailController,
+      decoration: const InputDecoration(
+        labelText: 'Email',
+        border: OutlineInputBorder(),
+      ),
+      validator: (value) => _handleValidateField(value, 'Enter email'),
+    );
+  }
+
+  TextFormField _passwordTextField() {
+    return TextFormField(
+      controller: _passwordController,
+      decoration: const InputDecoration(
+        labelText: 'Password',
+        border: OutlineInputBorder(),
+      ),
+      obscureText: true,
+      validator: (value) => _handleValidateField(value, 'Enter password'),
+    );
+  }
+
+  SizedBox _loginButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: _handleLogin,
+        child: const Text('Login'),
       ),
     );
   }
