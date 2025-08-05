@@ -12,8 +12,8 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController(text: 'matheus@olly-olly.com');
+  final TextEditingController _passwordController = TextEditingController(text: '123');
 
   String? _error;
 
@@ -56,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
     return Form(
       key: _formKey,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.min, 
         children: [
           _loginTextLabel(context),
           const SizedBox(height: 24),
@@ -112,6 +112,12 @@ class _LoginFormState extends State<LoginForm> {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.teal,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
         onPressed: _handleLogin,
         child: const Text('Login'),
       ),
