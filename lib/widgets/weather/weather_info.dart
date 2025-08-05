@@ -59,12 +59,20 @@ class WeatherHeader extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Icon
-          Image.network(
-            'https://openweathermap.org/img/wn/${weatherInfo.icon}@4x.png',
-            width: 100,
-            height: 100,
-            fit: BoxFit.cover,
+          Card(
+            color: const Color(0xFFDDEAEC),
+            elevation: 4, // Sombra para destacar do fundo
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Image.network(
+              'https://openweathermap.org/img/wn/${weatherInfo.icon}@4x.png',
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
           ),
+          
 
           const SizedBox(height: 16),
 

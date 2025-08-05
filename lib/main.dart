@@ -29,7 +29,7 @@ class WeatherApp extends StatelessWidget {
         title: 'The Weather by Matheus',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Color(0x0011343A)), // PANTONE - Ocean Depths
+          colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF11343A)), // PANTONE - Ocean Depths
           fontFamily: 'Raleway'
         ),
         home: isLoggedIn
