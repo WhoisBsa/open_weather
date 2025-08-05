@@ -1,17 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:open_weather/auth/auth_controller.dart';
 import 'package:open_weather/screens/login_screen.dart';
+import 'package:open_weather/screens/splash_screen.dart';
 import 'package:open_weather/screens/weather_screen.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: ".env");
   runApp(WeatherApp());
 }
 
-class WeatherApp extends StatelessWidget {
-  final AuthController _auth = AuthController();
-  
-  WeatherApp({super.key});
+class WeatherApp extends StatefulWidget {
+  const WeatherApp({super.key});
 
+  @override
+  State<WeatherApp> createState() => _WeatherAppState();
+}
+
+class _WeatherAppState extends State<WeatherApp> {
+  final AuthController _auth = AuthController();
+  bool _showSplash = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        _showSplash = false;
+      });
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<bool>(
@@ -24,15 +43,17 @@ class WeatherApp extends StatelessWidget {
 
   MaterialApp _wrapper(bool isLoggedIn) {
     return MaterialApp(
-        title: 'Open Weather by Matheus Barbosa',
+        title: 'The Weather by Matheus',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Color(0x0011343A)), // PANTONE - Ocean Depths
+          colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF11343A)), // PANTONE - Ocean Depths
           fontFamily: 'Raleway'
         ),
-        home: isLoggedIn
-            ? WeatherScreen(onLogout: _auth.logout)
-            : LoginScreen(onLogin: _auth.login),
+        home:  _showSplash
+          ? SplashScreen()
+          : isLoggedIn
+          ? WeatherScreen(onLogout: _auth.logout)
+          : LoginScreen(onLogin: _auth.login),
       );
   }
 }
