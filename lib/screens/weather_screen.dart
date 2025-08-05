@@ -1,57 +1,59 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:open_weather/services/location_service.dart';
+import 'package:open_weather/controllers/weather_controller.dart';
+import 'package:open_weather/widgets/weather/weather_error.dart';
+import 'package:open_weather/widgets/weather/weather_info.dart';
+import 'package:open_weather/widgets/weather/weather_loading.dart';
+import 'package:provider/provider.dart';
 
-class WeatherScreen extends StatefulWidget {
+class WeatherScreen extends StatelessWidget {
   final VoidCallback onLogout;
 
   const WeatherScreen({super.key, required this.onLogout});
 
   @override
-  State<WeatherScreen> createState() => _WeatherScreenState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => WeatherController()..loadWeather(),
+      child: _WeatherContent(onLogout: onLogout),
+    );
+  }
 }
 
-class _WeatherScreenState extends State<WeatherScreen> {
-  Position? _position;
-  String? _error;
+class _WeatherContent extends StatelessWidget {
+  final VoidCallback onLogout;
 
-  @override
-  void initState() {
-    super.initState();
-    _loadLocation();
-  }
-
-  Future<void> _loadLocation() async {
-    try {
-      final pos = await LocationService.determinePosition();
-      setState(() => _position = pos);
-    } catch (e) {
-      setState(() => _error = e.toString());
-    }
-  }
+  const _WeatherContent({required this.onLogout});
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.watch<WeatherController>();
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Weather'),
-        actions: [
-          IconButton(
-            onPressed: widget.onLogout,
-            icon: const Icon(Icons.logout),
-            tooltip: 'Logout',
-          ),
-        ],
-      ),
-      body: Center(
-        child: _error != null
-            ? Text('Error: $_error', style: const TextStyle(color: Colors.red))
-            : _position != null
-            ? Text(
-                'Your location: ${_position!.latitude}, ${_position!.longitude}',
-              )
-            : const CircularProgressIndicator(),
-      ),
+      appBar: _appBar(controller),
+      body: Builder(builder: (context) {
+        if (controller.loading) return const WeatherLoading();
+        if (controller.error != null) return WeatherError(message: controller.error!);
+        if (controller.weather != null) return WeatherInfo(weatherInfo: controller.weather!);
+        return const SizedBox(); 
+      }),
+    );
+  }
+
+  AppBar _appBar(WeatherController controller) {
+    return AppBar(
+      title: const Text('The Weather by Matheus'),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.refresh),
+          onPressed: controller.loadWeather,
+          tooltip: 'Refresh',
+        ),
+        IconButton(
+          icon: const Icon(Icons.logout),
+          onPressed: onLogout,
+          tooltip: 'Logout',
+        ),
+      ],
     );
   }
 }

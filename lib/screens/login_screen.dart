@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_weather/models/login_model.dart';
-import 'package:open_weather/widgets/login_form.dart';
+import 'package:open_weather/widgets/login/login_form.dart';
 
 class LoginScreen extends StatelessWidget {
   final bool Function(LoginModel) onLogin;

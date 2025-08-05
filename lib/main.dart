@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:open_weather/auth/auth_controller.dart';
 import 'package:open_weather/screens/login_screen.dart';
 import 'package:open_weather/screens/weather_screen.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: ".env");
   runApp(WeatherApp());
 }
 
@@ -24,7 +26,7 @@ class WeatherApp extends StatelessWidget {
 
   MaterialApp _wrapper(bool isLoggedIn) {
     return MaterialApp(
-        title: 'Open Weather by Matheus Barbosa',
+        title: 'The Weather by Matheus',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Color(0x0011343A)), // PANTONE - Ocean Depths
