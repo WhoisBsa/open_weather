@@ -13,8 +13,15 @@ class WeatherScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => WeatherController()..loadWeather(),
-      child: _WeatherContent(onLogout: onLogout),
+      create: (_) => WeatherController(),
+      child: Builder(
+        builder: (context) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.read<WeatherController>().loadWeather();
+          });
+          return _WeatherContent(onLogout: onLogout);
+        },
+      ),
     );
   }
 }
