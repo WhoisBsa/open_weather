@@ -14,8 +14,8 @@ class LoginScreen extends StatelessWidget {
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 400),
           child: Padding(
-            padding: EdgeInsets.all(24.0), 
-            child: LoginForm(onLogin: onLogin)
+            padding: EdgeInsets.all(24.0),
+            child: LoginForm(onLogin: onLogin),
           ),
         ),
       ),

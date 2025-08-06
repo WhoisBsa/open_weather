@@ -8,14 +8,13 @@ class WeatherInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
             WeatherHeader(weatherInfo: weatherInfo),
-            WeatherDetails(weatherInfo: weatherInfo)
+            WeatherDetails(weatherInfo: weatherInfo),
           ],
         ),
       ),
@@ -50,9 +49,7 @@ class WeatherHeader extends StatelessWidget {
 
           Text(
             weatherInfo.country,
-            style: theme.textTheme.bodyLarge?.copyWith(
-              color: Colors.grey[600],
-            ),
+            style: theme.textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
             textAlign: TextAlign.center,
           ),
 
@@ -72,7 +69,6 @@ class WeatherHeader extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          
 
           const SizedBox(height: 16),
 
@@ -89,9 +85,7 @@ class WeatherHeader extends StatelessWidget {
           // Description
           Text(
             weatherInfo.main,
-            style: theme.textTheme.titleMedium?.copyWith(
-              letterSpacing: 1.2,
-            ),
+            style: theme.textTheme.titleMedium?.copyWith(letterSpacing: 1.2),
           ),
 
           const SizedBox(height: 24),
@@ -138,27 +132,37 @@ class WeatherDetails extends StatelessWidget {
     return Column(
       children: [
         WeatherDetailTile(
+          icon: Icons.thermostat,
           label: 'Feels Like',
           value: '${weatherInfo.feelsLike.toStringAsFixed(1)} °F',
         ),
         WeatherDetailTile(
+          icon: Icons.arrow_downward,
           label: 'Min Temp',
           value: '${weatherInfo.tempMin.toStringAsFixed(1)} °F',
         ),
         WeatherDetailTile(
+          icon: Icons.arrow_upward,
           label: 'Max Temp',
           value: '${weatherInfo.tempMax.toStringAsFixed(1)} °F',
         ),
-        WeatherDetailTile(label: 'Humidity', value: '${weatherInfo.humidity}%'),
         WeatherDetailTile(
+          icon: Icons.water_drop,
+          label: 'Humidity',
+          value: '${weatherInfo.humidity}%',
+        ),
+        WeatherDetailTile(
+          icon: Icons.speed,
           label: 'Pressure',
           value: '${weatherInfo.pressure} hPa',
         ),
         WeatherDetailTile(
+          icon: Icons.air,
           label: 'Wind Speed',
           value: '${weatherInfo.windSpeed} m/s',
         ),
         WeatherDetailTile(
+          icon: Icons.explore,
           label: 'Wind Direction',
           value: windDirectionFromDeg(weatherInfo.windDeg),
         ),
@@ -168,11 +172,13 @@ class WeatherDetails extends StatelessWidget {
 }
 
 class WeatherDetailTile extends StatelessWidget {
+  final IconData icon;
   final String label;
   final String value;
 
   const WeatherDetailTile({
     super.key,
+    required this.icon,
     required this.label,
     required this.value,
   });
@@ -184,7 +190,14 @@ class WeatherDetailTile extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(fontSize: 16)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            spacing: 8,
+            children: [
+              Icon(icon, size: 16),
+              Text(label, style: const TextStyle(fontSize: 16)),
+            ],
+          ),
           Text(
             value,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),

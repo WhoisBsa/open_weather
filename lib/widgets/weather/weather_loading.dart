@@ -5,14 +5,17 @@ class WeatherLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-        CircularProgressIndicator(),
-        SizedBox(height: 8),
-        Text('Loading, please wait...')
-      ],)
-    ));
+    return const Center(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(height: 8),
+            Text('Loading, please wait...'),
+          ],
+        ),
+      ),
+    );
   }
 }

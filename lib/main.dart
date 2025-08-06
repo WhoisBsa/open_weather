@@ -24,17 +24,17 @@ class _WeatherAppState extends State<WeatherApp> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       setState(() {
         _showSplash = false;
       });
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<bool>(
-      valueListenable: _auth, 
+      valueListenable: _auth,
       builder: (context, isLoggedIn, _) {
         return _wrapper(isLoggedIn);
       },
@@ -43,17 +43,19 @@ class _WeatherAppState extends State<WeatherApp> {
 
   MaterialApp _wrapper(bool isLoggedIn) {
     return MaterialApp(
-        title: 'The Weather by Matheus',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF11343A)), // PANTONE - Ocean Depths
-          fontFamily: 'Raleway'
-        ),
-        home:  _showSplash
+      title: 'The Weather by Matheus',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Color(0xFF11343A),
+        ), // PANTONE - Ocean Depths
+        fontFamily: 'Raleway',
+      ),
+      home: _showSplash
           ? SplashScreen()
           : isLoggedIn
           ? WeatherScreen(onLogout: _auth.logout)
           : LoginScreen(onLogin: _auth.login),
-      );
+    );
   }
 }
