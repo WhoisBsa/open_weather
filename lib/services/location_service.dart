@@ -22,13 +22,17 @@ class LocationService {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error(
+        'Location permissions are permanently denied, we cannot request permissions.',
+      );
     }
 
     final LocationSettings locationSettings = LocationSettings(
       accuracy: LocationAccuracy.high,
       distanceFilter: 100,
     );
-    return await Geolocator.getCurrentPosition(locationSettings: locationSettings);
+    return await Geolocator.getCurrentPosition(
+      locationSettings: locationSettings,
+    );
   }
 }

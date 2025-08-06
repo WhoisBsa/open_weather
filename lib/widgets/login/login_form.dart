@@ -22,7 +22,9 @@ class _LoginFormState extends State<LoginForm> {
       final email = _emailController.text.trim();
       final password = _passwordController.text.trim();
 
-      final success = widget.onLogin(LoginModel(email: email, password: password));
+      final success = widget.onLogin(
+        LoginModel(email: email, password: password),
+      );
 
       if (!success) {
         setState(() {
@@ -56,8 +58,10 @@ class _LoginFormState extends State<LoginForm> {
     return Form(
       key: _formKey,
       child: Column(
-        mainAxisSize: MainAxisSize.min, 
+        mainAxisSize: MainAxisSize.min,
         children: [
+          _headerTitle(context),
+          const SizedBox(height: 24),
           _loginTextLabel(context),
           const SizedBox(height: 24),
           if (_error != null) _errorText(),
@@ -71,11 +75,19 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Text _loginTextLabel(BuildContext context) {
+  Text _headerTitle(BuildContext context) {
     return Text(
-      'Login',
-      style: Theme.of(context).textTheme.headlineMedium
+      'The Weather',
+      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+        fontWeight: FontWeight.bold,
+        // fontFamily: 'Sora',
+        color: Theme.of(context).colorScheme.primary,
+      ),
     );
+  }
+
+  Text _loginTextLabel(BuildContext context) {
+    return Text('Login', style: Theme.of(context).textTheme.headlineMedium);
   }
 
   Padding _errorText() {

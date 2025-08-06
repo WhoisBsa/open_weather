@@ -37,12 +37,16 @@ class _WeatherContent extends StatelessWidget {
 
     return Scaffold(
       appBar: _appBar(controller),
-      body: Builder(builder: (context) {
-        if (controller.loading) return const WeatherLoading();
-        if (controller.error != null) return WeatherError(message: controller.error!);
-        if (controller.weather != null) return WeatherInfo(weatherInfo: controller.weather!);
-        return const SizedBox(); 
-      }),
+      body: Builder(
+        builder: (context) {
+          if (controller.loading) return const WeatherLoading();
+          if (controller.error != null)
+            return WeatherError(message: controller.error!);
+          if (controller.weather != null)
+            return WeatherInfo(weatherInfo: controller.weather!);
+          return const SizedBox();
+        },
+      ),
     );
   }
 

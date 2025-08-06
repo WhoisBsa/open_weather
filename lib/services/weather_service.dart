@@ -9,7 +9,8 @@ class WeatherService {
     final baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
     final apiKey = dotenv.env['OPEN_WEATHER_API_KEY'];
 
-    final url = '$baseUrl?lat=$lat&lon=$lon&exclude=minutely,hourly,daily&units=imperial&APPID=$apiKey';
+    final url =
+        '$baseUrl?lat=$lat&lon=$lon&exclude=minutely,hourly,daily&units=imperial&APPID=$apiKey';
 
     final response = await http.get(Uri.parse(url));
 
